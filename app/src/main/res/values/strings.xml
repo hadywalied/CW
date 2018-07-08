@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Co Work</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">username</string>
+    <string name="nav_header_subtitle">Email</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Log In</string>
+    <string name="email">Email</string>
+    <string name="username">User Name</string>
+    <string name="password">Password</string>
+    <string name="login_with">Or</string>
+    <string name="passwordReset">Forgot password?</string>
+
+    //---------- this app id can change if you create a new app ---------
+    <string name="facebook_app_id">218737005419456</string>
+    <string name="fb_login_protocol_scheme">fb218737005419456</string>
+</resources>
