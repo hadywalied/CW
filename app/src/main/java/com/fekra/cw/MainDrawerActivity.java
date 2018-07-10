@@ -4,28 +4,40 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.irozon.alertview.AlertActionStyle;
+import com.irozon.alertview.AlertStyle;
+import com.irozon.alertview.AlertTheme;
+import com.irozon.alertview.AlertView;
+import com.irozon.alertview.objects.AlertAction;
 import com.rupins.drawercardbehaviour.CardDrawerLayout;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    LinearLayout llProfileHeader;
+    Fragment fragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_drawer);
+
+        llProfileHeader = (LinearLayout) findViewById(R.id.ll_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,6 +70,20 @@ public class MainDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        llProfileHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Begin the transaction
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                // Replace the contents of the container with the new fragment
+                ft.replace(R.id.fl_holder, new profile());
+                // or ft.add(R.id.your_placeholder, new FooFragment());
+                // Complete the changes added above
+                ft.commit();
+            }
+        });
     }
 
     @Override
@@ -105,23 +131,23 @@ public class MainDrawerActivity extends AppCompatActivity
             case R.id.nav_featured:
 
                 Toast.makeText(MainDrawerActivity.this, "Open the Freatured fragment", Toast.LENGTH_SHORT).show();
-
+                fragment = new featured();
                 break;
             case R.id.nav_map:
 
                 Toast.makeText(MainDrawerActivity.this, "Open the Map Activity", Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(MainDrawerActivity.this,Map.class));
+                //startActivity(new Intent(MainDrawerActivity.this,Map.class));
 
                 break;
             case R.id.nav_favourites:
                 Toast.makeText(MainDrawerActivity.this, "Open the Favourites Fragment", Toast.LENGTH_SHORT).show();
-
+                fragment = new favourites();
 
                 break;
             case R.id.nav_add:
                 Toast.makeText(MainDrawerActivity.this, "Open the Creation Activity", Toast.LENGTH_SHORT).show();
-
+                startActivity(new Intent(MainDrawerActivity.this, CreationActivity.class));
                 break;
             case R.id.nav_share:
                 Toast.makeText(MainDrawerActivity.this, "Open the sharing Intent", Toast.LENGTH_SHORT).show();
@@ -134,12 +160,32 @@ public class MainDrawerActivity extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 Toast.makeText(MainDrawerActivity.this, "Open the logout AlertDialog", Toast.LENGTH_SHORT).show();
+                AlertView alert = new AlertView("Log Out", "Do you want to log out?", AlertStyle.BOTTOM_SHEET);
+                alert.addAction(new AlertAction("LogOut", AlertActionStyle.DEFAULT, action -> {
+                    // Logout callback
+                }));
+                alert.addAction(new AlertAction("cancel", AlertActionStyle.NEGATIVE, action -> {
+                    // cancel callback
+                }));
+                alert.setTheme(AlertTheme.LIGHT);
+                alert.show(this);
 
                 break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        if (fragment != null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            // Replace the contents of the container with the new fragment
+            fragmentTransaction.replace(R.id.fl_holder, fragment);
+            // or ft.add(R.id.your_placeholder, new FooFragment());
+            // Complete the changes added above
+            fragmentTransaction.commit();
+        }
+
+        
         return true;
     }
 

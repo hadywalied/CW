@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -37,5 +41,5 @@ dependencies {
     implementation "com.android.support:design:27.1.1"
     implementation 'com.github.RupinSahu:CardDrawer:-SNAPSHOT'
     implementation 'com.facebook.android:facebook-login:4.34.0'
-
+    implementation 'com.irozon.alertview:alertview:1.0.1'
 }
