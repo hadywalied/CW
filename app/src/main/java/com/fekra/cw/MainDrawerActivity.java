@@ -173,7 +173,7 @@ public class MainDrawerActivity extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        CardDrawerLayout drawer = (CardDrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         if (fragment != null) {
@@ -185,7 +185,7 @@ public class MainDrawerActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        
+
         return true;
     }
 
